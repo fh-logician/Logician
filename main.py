@@ -1,5 +1,7 @@
 import sys
+
 from PyQt5 import QtGui, QtWidgets
+
 from tree import Tree
 
 
@@ -27,7 +29,6 @@ class Logician(QtWidgets.QApplication):
         # Setup the labels for the expression and simplified fields
         self.expression_label = QtWidgets.QLabel("Expression", self.window)
         self.expression_label.setAccessibleName("Expression Label")
-        self.expression_label.setAccessibleDescription()
 
         self.simplified_minterm_label = QtWidgets.QLabel("Simplified Minterm", self.window)
         self.simplified_minterm_label.setAccessibleName("Simplified Minterm Label")
