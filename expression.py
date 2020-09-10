@@ -1,4 +1,5 @@
 from typing import Union
+
 from variable import Variable
 
 
@@ -54,7 +55,7 @@ class Expression:
 
     def __str__(self):
         if not self.has_not():
-            return "{} {} {}".format(
+            return "({} {} {})".format(
                 str(self.get_left()), self.get_operator(), str(self.get_right())
             )
         return "NOT({} {} {})".format(
@@ -95,11 +96,11 @@ class Expression:
         right = self.get_right().evaluate(truth_values)
 
         evaluation = False
-        if self.get_operator() in [ "OR", "NOR" ]:
+        if self.get_operator() in ["OR", "NOR"]:
             evaluation = left or right
-        elif self.get_operator() in [ "AND", "NAND" ]:
+        elif self.get_operator() in ["AND", "NAND"]:
             evaluation = left and right
-        elif self.get_operator() in [ "XOR", "XNOR" ]:
+        elif self.get_operator() in ["XOR", "XNOR"]:
             evaluation = left ^ right
 
         if self.has_not():

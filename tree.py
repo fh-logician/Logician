@@ -1,13 +1,14 @@
-from expression import Expression
+from typing import Union
+
 from lark import Lark
 from lark.tree import Tree as LarkTree
+
+from expression import Expression
 from qm import QM
-from typing import Union
 from variable import Variable
 
 
 class Tree:
-
     BOOLEAN = Lark(
         """
         start: orexpr
@@ -96,15 +97,17 @@ class Tree:
 
             # Check if the expression is a LogicNode or LogicVar
             if "value" in self.__root:
-                self.__root = Variable(json = self.__root)
+                self.__root = Variable(json=self.__root)
             else:
-                self.__root = Expression(json = self.__root)
+                self.__root = Expression(json=self.__root)
 
         # If parsing the expression fails, the boolean expression is invalid
         except:
             raise ValueError("The expression given is invalid")
 
     def __str__(self):
+        if isinstance(self.__root, Expression):
+            return str(self.__root)[1:-1]
         return str(self.__root)
 
     # # # # # # # # # # # # # # # # # # # #
@@ -217,13 +220,16 @@ class Tree:
         ]
 
         minterm_qm = QM(self.get_variables(), true_at_minterms).get_function()
-        maxterm_qm = QM(self.get_variables(), true_at_maxterms, is_maxterm = True).get_function()
-        
+        maxterm_qm = QM(self.get_variables(), true_at_maxterms, is_maxterm=True).get_function()
+
+        tree_minterm = Tree(minterm_qm) if minterm_qm not in "01" else minterm_qm
+        tree_maxterm = Tree(maxterm_qm) if maxterm_qm not in "01" else maxterm_qm
+
         if get_minterm is not None:
             if get_minterm:
-                return Tree(minterm_qm)
-            return Tree(maxterm_qm)
-        return Tree(min(minterm_qm, maxterm_qm, key = lambda qm: len(qm)))
+                return tree_minterm
+            return tree_maxterm
+        return min(str(tree_minterm), str(tree_maxterm), key=lambda qm: len(qm))
 
     def functional(self) -> str:
         """Returns this Tree object in a functional notation

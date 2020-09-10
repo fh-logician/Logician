@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union
 
 
 class Minterm:
@@ -345,7 +345,7 @@ class QM:
             implicant = prime_implicants[j]
 
             # Add parentheses if necessary
-            if implicant.get_value().count("-") < len(self._variables) - 1:
+            if implicant.get_value().count("-") < len(self._variables):
                 result += "("
 
             # Iterate through all bits in the implicants value
@@ -358,7 +358,7 @@ class QM:
                     result += " AND " if not self._is_maxterm else " OR "
 
             # Add parentheses if necessary
-            if implicant.get_value().count("-") < len(self._variables) - 1:
+            if implicant.get_value().count("-") < len(self._variables):
                 result += ")"
 
             # Combine all minterm expressions with an OR operator
