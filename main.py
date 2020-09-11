@@ -94,6 +94,34 @@ class Logician(QtWidgets.QApplication):
             width // 2, height // 2  # The window size will be half the width and half the height of the screen
         )
 
+        # Create an action for the credits message box
+        credits_act = QtWidgets.QAction("Credits", self.window)
+        credits_act.setShortcut('Cmd+I')
+        credits_act.setStatusTip('Show the credits given')
+        credits_act.triggered.connect(self.show_credits)
+
+        # Setup a menubar for the credits dialog box
+        self.window.statusBar()
+        menubar = self.window.menuBar()
+        help_menu = menubar.addMenu('Help')
+        help_menu.addAction(credits_act)
+
+    def show_credits(self):
+        """This function is called whenever the user clicks on the credits option
+        in the menu bar
+        """
+
+        # Create the message box
+        credits_message = QtWidgets.QMessageBox(self.window)
+        credits_message.setWindowTitle('Credits')
+        credits_message.setText('Credits')
+        credits_message.setInformativeText(
+            "I use the <a href=\"https://github.com/lark-parser/lark\">Lark parser</a> developed by <a href=\"https://github.com/erezsh\">erezsh</a>"
+        )
+        credits_message.setTextFormat(QtCore.Qt.RichText)
+        credits_message.setIcon(QtWidgets.QMessageBox.Information)
+        credits_message.exec_()
+
     def on_edit(self):
         """This function is called whenever the Expression textfield is changed by the user
         """
