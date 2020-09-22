@@ -49,4 +49,4 @@ if sys.platform == "darwin":
                     "CFBundleVersion": "0.1.0",
                     "CFBundleShortVersionString": "0.1.0"
                  },
-                 bundle_identifier=None
+                 bundle_identifier=None)
