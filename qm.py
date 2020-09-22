@@ -28,8 +28,8 @@ class Minterm:
             return False
 
         return (
-                self._value == minterm._value and
-                self._values == minterm._values
+                self._value == minterm.get_value() and
+                self._values == minterm.get_values()
         )
 
     def get_values(self) -> list:
@@ -105,7 +105,9 @@ class QM:
     # Initialize
     # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __init__(self, variables, values, dont_cares=[], *, is_maxterm=False):
+    def __init__(self, variables, values, dont_cares=None, *, is_maxterm=False):
+        if dont_cares is None:
+            dont_cares = []
         self._variables = variables
         self._values = values
         self._dont_cares = dont_cares
@@ -156,7 +158,8 @@ class QM:
 
         return groups
 
-    def __power_set(self, values, prime_implicants):
+    @staticmethod
+    def __power_set(values, prime_implicants):
         """Creates a power set of all valid prime implicants that covers
         the rest of an expression. This is used after the essential prime implicants have been found.
 
@@ -185,7 +188,7 @@ class QM:
             power_set.append(current_set)
 
         # Remove all subsets that do not cover the rest of the implicants
-        minSet = power_set[0]
+        min_set = power_set[0]
         for subset in power_set:
 
             # Get all the values the set covers
@@ -198,10 +201,10 @@ class QM:
 
             # Check if this subset covers the rest of the values
             if temp_values == values:
-                if len(subset) < len(minSet):
-                    minSet = subset
+                if len(subset) < len(min_set):
+                    min_set = subset
 
-        return minSet
+        return min_set
 
     # # # # # # # # # # # # # # # # # # # # # # # # #
     # Compare Methods
@@ -217,7 +220,7 @@ class QM:
         """
 
         # Get initial group if group is None
-        if groups == None:
+        if groups is None:
             groups = self.__initial_group()
 
         # If there is only 1 group, return all the minterms in it
@@ -228,7 +231,7 @@ class QM:
         else:
             unused = []
             comparisons = range(len(groups) - 1)
-            new_groups = [[] for c in comparisons]
+            new_groups = [[] for _ in comparisons]
 
             for compare in comparisons:
                 group1 = groups[compare]
@@ -244,7 +247,7 @@ class QM:
                         # Only add it to the new group if term3 is not None
                         #   term3 will only be None if term1 and term2 could not
                         #   be combined
-                        if term3 != None:
+                        if term3 is not None:
                             term1.use()
                             term2.use()
                             if term3 not in new_groups[compare]:
@@ -354,7 +357,8 @@ class QM:
                     result += "NOT "
                 if implicant.get_value()[i] != "-":
                     result += self._variables[i]
-                if implicant.get_value().count("-", i + 1) < len(implicant.get_value()) - i - 1 and implicant.get_value()[i] != "-":
+                if implicant.get_value().count("-", i + 1) < len(implicant.get_value()) - i - 1 and \
+                        implicant.get_value()[i] != "-":
                     result += " AND " if not self._is_maxterm else " OR "
 
             # Add parentheses if necessary

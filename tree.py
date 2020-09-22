@@ -97,12 +97,14 @@ class Tree:
 
             # Check if the expression is a LogicNode or LogicVar
             if "value" in self.__root:
+                # noinspection PyTypeChecker
                 self.__root = Variable(json=self.__root)
             else:
+                # noinspection PyTypeChecker
                 self.__root = Expression(json=self.__root)
 
         # If parsing the expression fails, the boolean expression is invalid
-        except:
+        except Exception:
             raise ValueError("The expression given is invalid")
 
     def __str__(self):
@@ -158,7 +160,7 @@ class Tree:
         ])
 
         if as_list:
-            return [ header, separator, values ]
+            return [header, separator, values]
         return f"{header}\n{separator}\n{values}"
 
     # # # # # # # # # # # # # # # # # # # #
@@ -229,7 +231,7 @@ class Tree:
             if get_minterm:
                 return tree_minterm
             return tree_maxterm
-        return min(str(tree_minterm), str(tree_maxterm), key=lambda qm: len(qm))
+        return min(tree_minterm, tree_maxterm, key=lambda qm: len(str(qm)))
 
     def functional(self) -> str:
         """Returns this Tree object in a functional notation

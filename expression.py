@@ -18,7 +18,11 @@ class Expression:
     :type json: dict
     """
 
-    def __init__(self, left=None, operator=None, right=None, has_not=False, *, json=None):
+    def __init__(self, left: ['Expression', Variable] = None,
+                 operator: str = None,
+                 right: ['Expression', Variable] = None,
+                 has_not: bool = False, *,
+                 json: dict = None):
 
         # Check if the JSON object is given
         if json is not None:
@@ -51,7 +55,7 @@ class Expression:
                 "The \"left\", \"operator\", \"right\", and \"has_not\" parameters must not be a NoneType.")
 
     def __str__(self):
-        if not self.has_not():
+        if not self.has_not:
             return "({} {} {})".format(
                 str(self.get_left()), self.get_operator(), str(self.get_right())
             )
@@ -75,10 +79,6 @@ class Expression:
         """Returns the right value of this Expression object"""
         return self.right
 
-    def has_not(self) -> bool:
-        """Returns whether or not this Expression object has a ~ (NOT) operator attached to it"""
-        return self.has_not
-
     # # # # # # # # # # # # # # # # # # # # # # # # #
     # Evaluation Methods
     # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -100,7 +100,7 @@ class Expression:
         elif self.get_operator() in ["XOR", "XNOR"]:
             evaluation = left ^ right
 
-        if self.has_not():
+        if self.has_not:
             return not evaluation
         return evaluation
 
@@ -113,6 +113,6 @@ class Expression:
             - ``NOT (a AND b)`` would be functionally equivalent to ``not(and(a, b))``
         """
         expr = f"{self.get_operator().lower()}({self.get_left().functional()}, {self.get_right().functional()})"
-        if self.has_not():
+        if self.has_not:
             expr = f"not({expr})"
         return expr

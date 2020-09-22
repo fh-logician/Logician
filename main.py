@@ -116,7 +116,8 @@ class Logician(QtWidgets.QApplication):
         credits_message.setWindowTitle('Credits')
         credits_message.setText('Credits')
         credits_message.setInformativeText(
-            "I use the <a href=\"https://github.com/lark-parser/lark\">Lark parser</a> developed by <a href=\"https://github.com/erezsh\">erezsh</a>"
+            "I use the <a href=\"https://github.com/lark-parser/lark\">Lark parser</a> developed by <a "
+            "href=\"https://github.com/erezsh\">erezsh</a> "
         )
         credits_message.setTextFormat(QtCore.Qt.RichText)
         credits_message.setIcon(QtWidgets.QMessageBox.Information)

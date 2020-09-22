@@ -12,8 +12,11 @@ class Variable:
     :type json: dict
     """
 
-    def __init__(self, value=None, has_not=None, *, json=None):
+    def __init__(self, value: str = None, has_not: bool = None, *, json: dict = None):
+        """
 
+        :rtype: object
+        """
         # Check if the JSON object is given
         if json is not None:
 
