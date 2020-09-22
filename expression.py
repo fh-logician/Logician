@@ -1,24 +1,21 @@
 from typing import Union
-
 from variable import Variable
 
 
 class Expression:
     """A Expression class holds information about a boolean expression
 
-    Parameters
-    ----------
-        left : Expression or Variable
-            The left side of this Expression expression
-        operator : enum.OPERATOR
-            The operator of this Expression expression
-        right : Expression or Variable
-            The right side of this Expression expression
-        has_not : boolean
-            Whether or not this Expression object has a ~ (NOT) operator attached to it (Defaults to False)
-        json : dict
-            A JSON object to load a Expression object from.
-                The required keys are the same as the parameters (left, operator, right, has_not)
+    :param left: The left side of this Expression
+    :param operator: The operator of this Expression
+    :param right: The right side of this Expression
+    :param has_not: Whether or not this Expression object has a ~ (NOT) operator attached to it
+    :param json: A JSON object to load an Expression object from
+
+    :type left: Expression or Variable
+    :type operator: str
+    :type right: Expression or Variable
+    :type has_not: bool
+    :type json: dict
     """
 
     def __init__(self, left=None, operator=None, right=None, has_not=False, *, json=None):
@@ -45,10 +42,10 @@ class Expression:
 
         # Make sure left, operator, right, and has_not exist
         if left is not None and operator is not None and right is not None and has_not is not None:
-            self.__left = left
-            self.__operator = operator
-            self.__right = right
-            self.__has_not = has_not
+            self.left = left
+            self.operator = operator
+            self.right = right
+            self.has_not = has_not
         else:
             raise ValueError(
                 "The \"left\", \"operator\", \"right\", and \"has_not\" parameters must not be a NoneType.")
@@ -68,19 +65,19 @@ class Expression:
 
     def get_left(self) -> Union['Expression', 'Variable']:
         """Returns the left value of this Expression object"""
-        return self.__left
+        return self.left
 
     def get_operator(self) -> str:
         """Returns the operator of this Expression object"""
-        return self.__operator
+        return self.operator
 
     def get_right(self) -> Union['Expression', 'Variable']:
         """Returns the right value of this Expression object"""
-        return self.__right
+        return self.right
 
     def has_not(self) -> bool:
         """Returns whether or not this Expression object has a ~ (NOT) operator attached to it"""
-        return self.__has_not
+        return self.has_not
 
     # # # # # # # # # # # # # # # # # # # # # # # # #
     # Evaluation Methods
