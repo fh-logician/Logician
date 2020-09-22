@@ -1,7 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-block_cipher = None
+import sys
 
+block_cipher = None
 
 a = Analysis(['main.py'],
              pathex=['/Users/fellowhashbrown/Desktop/Developing/Python/Projects/Logician'],
@@ -23,20 +24,29 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='main',
+          name='Logician',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
-app = BUNDLE(exe,
-             name='Logician.app',
-             icon='logician.icns',
-	     info_plist = {
-		'NSHighResolutionCapable': 'True',
-		'CFBundleVersion': '0.1.0',
-		'CFBundleShortVersionString': '0.1.0'
-	     },
-             bundle_identifier=None)
+          console=False)
+
+# The app to build if on a Windows or Linux machine
+if sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
+    app = BUNDLE(exe,
+                 name='Logician.exe',
+                 icon='logician.ico')
+
+# The app to build if on a MacOS machine
+if sys.platform == "darwin":
+    app = BUNDLE(exe,
+                 name="Logician.app",
+                 icon="logician.icns",
+                 info_plist = {
+                    "NSHighResolutionCapable": "True",
+                    "CFBundleVersion": "0.1.0",
+                    "CFBundleShortVersionString": "0.1.0"
+                 },
+                 bundle_identifier=None
