@@ -1,7 +1,5 @@
 #!/bin/bash
 
-MAIN_SCRIPT=$1
-
-python3.7 -m PyInstaller --windowed --onefile "$MAIN_SCRIPT"
+python3.7 -m PyInstaller --windowed --onefile main.spec
 create-dmg 'dist/Logician.app'
 rm -rf ./build ./dist
