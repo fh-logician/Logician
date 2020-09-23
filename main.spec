@@ -31,13 +31,13 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False)
+          console=False,
+          icon="logician.ico" if sys.platform != "darwin" else "logician.icns")
 
 # The app to build if on a Windows or Linux machine
 if sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
     app = BUNDLE(exe,
-                 name='Logician.exe',
-                 icon='logician.ico')
+                 name='Logician.exe')
 
 # The app to build if on a MacOS machine
 if sys.platform == "darwin":
@@ -46,7 +46,7 @@ if sys.platform == "darwin":
                  icon="logician.icns",
                  info_plist = {
                     "NSHighResolutionCapable": "True",
-                    "CFBundleVersion": "0.1.0",
-                    "CFBundleShortVersionString": "0.1.0"
+                    "CFBundleVersion": "0.1.1",
+                    "CFBundleShortVersionString": "0.1.1"
                  },
                  bundle_identifier=None)
