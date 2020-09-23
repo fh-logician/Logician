@@ -1,8 +1,26 @@
 import sys
+import os
 
 from PyQt5 import QtGui, QtWidgets, QtCore
 
 from tree import Tree
+
+
+def resource_path(relative_path):
+    """Get the absolute path to the specified path which primarily applies to a
+    single-file application
+
+    :param relative_path: The path of the file to retrieve
+
+    :type relative_path: str
+    """
+    # noinspection PyBroadException
+    try:
+        # noinspection PyProtectedMember,PyUnresolvedReferences
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 
 # # # # # # # # # # # # # # # # # # # #
@@ -24,6 +42,7 @@ class Logician(QtWidgets.QApplication):
         # Setup the application's window
         self.window = QtWidgets.QMainWindow()
         self.window.setWindowTitle("Logician")
+        self.window.setWindowIcon(QtGui.QIcon(resource_path("logician.png")))
         self.setup()
 
         # Setup the labels for the expression and simplified fields
