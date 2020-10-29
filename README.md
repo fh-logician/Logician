@@ -26,3 +26,7 @@ For example, the expression ``(a and b) or (a and c)`` can be simplified the fol
 The simplest expression will be highlighted in green when an expression is entered.
 
 The truth tables, which are at the bottom, will be the truth table for the entered expression and the simplest expression.
+
+## Download
+
+The Windows and MacOS versions of Logician can be downloaded on my [website](https://fellowhashbrown.com/downloads#logician)
