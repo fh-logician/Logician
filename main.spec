@@ -46,7 +46,7 @@ if sys.platform == "darwin":
                  icon="logician.icns",
                  info_plist = {
                     "NSHighResolutionCapable": "True",
-                    "CFBundleVersion": "0.1.1",
-                    "CFBundleShortVersionString": "0.1.1"
+                    "CFBundleVersion": "0.1.2",
+                    "CFBundleShortVersionString": "0.1.2"
                  },
                  bundle_identifier=None)
